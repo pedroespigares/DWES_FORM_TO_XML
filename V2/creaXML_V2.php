@@ -12,9 +12,9 @@
 	echo "<a href='#' onclick='history.go(-1);'>Ir atrás</a>";
 
     function añadirAsignatura(){
-        if(file_exists('xmlAsignaturas.xml')){
-            $centro = simplexml_load_file('xmlAsignaturas.xml');
-            $centro = new SimpleXMLElement(file_get_contents('xmlAsignaturas.xml'));
+        if(file_exists('asignaturas.xml')){
+            $centro = simplexml_load_file('asignaturas.xml');
+            $centro = new SimpleXMLElement(file_get_contents('asignaturas.xml'));
         }
 
         $asignatura = $centro -> addChild("asignatura");
@@ -23,12 +23,12 @@
         $asignatura -> addChild("duracion",$_POST["duracion"]);
         $asignatura -> addChild("tipo",$_POST["tipo"]);
 
-        $teachers = $asignatura -> addChild("profesores");
-        $titulares = $teachers -> addChild("titulares");
-        $practicas = $teachers -> addChild("practicas");
-        
+        if(isset($_POST["titDNI"]) || isset($_POST["pracDNI"])){
+            $teachers = $asignatura -> addChild("profesores");
+        }
 
         if(isset($_POST["titDNI"]) && isset($_POST["titNombre"]) && isset($_POST["titApellidos"])){
+            $titulares = $teachers -> addChild("titulares");
             for($i = 0; $i < count($_POST["titDNI"]); $i++){
                 $singleTitularTeacher = $titulares -> addChild("profesor");
                 $singleTitularTeacher -> addChild("DNI",$_POST["titDNI"][$i]);
@@ -38,6 +38,7 @@
         }
 
         if(isset($_POST["pracDNI"]) && isset($_POST["pracNombre"]) && isset($_POST["pracApellidos"])){
+            $practicas = $teachers -> addChild("practicas");
             for($i = 0; $i < count($_POST["pracDNI"]); $i++){
                 $singlePracticeTeacher = $practicas -> addChild("profesor");
                 $singlePracticeTeacher -> addChild("DNI",$_POST["pracDNI"][$i]);
@@ -46,8 +47,8 @@
             }
         }
 
-        file_put_contents("xmlAsignaturas.xml",$centro->asXML());
-        header("Location: xmlAsignaturas.xml");
+        file_put_contents("asignaturas.xml",$centro->asXML());
+        header("Location: asignaturas.xml");
     }
 
     añadirAsignatura();

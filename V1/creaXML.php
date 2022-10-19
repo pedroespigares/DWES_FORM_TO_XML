@@ -19,12 +19,12 @@
         $asignatura -> addChild("duracion",$_POST["duracion"]);
         $asignatura -> addChild("tipo",$_POST["tipo"]);
 
-        $teachers = $asignatura -> addChild("profesores");
-        $titulares = $teachers -> addChild("titulares");
-        $practicas = $teachers -> addChild("practicas");
-        
+        if(isset($_POST["titDNI"]) || isset($_POST["pracDNI"])){
+            $teachers = $asignatura -> addChild("profesores");
+        }
 
         if(isset($_POST["titDNI"]) && isset($_POST["titNombre"]) && isset($_POST["titApellidos"])){
+            $titulares = $teachers -> addChild("titulares");
             for($i = 0; $i < count($_POST["titDNI"]); $i++){
                 $singleTitularTeacher = $titulares -> addChild("profesor");
                 $singleTitularTeacher -> addChild("DNI",$_POST["titDNI"][$i]);
@@ -34,6 +34,7 @@
         }
 
         if(isset($_POST["pracDNI"]) && isset($_POST["pracNombre"]) && isset($_POST["pracApellidos"])){
+            $practicas = $teachers -> addChild("practicas");
             for($i = 0; $i < count($_POST["pracDNI"]); $i++){
                 $singlePracticeTeacher = $practicas -> addChild("profesor");
                 $singlePracticeTeacher -> addChild("DNI",$_POST["pracDNI"][$i]);
@@ -42,9 +43,9 @@
             }
         }
 
-        $asignatura->asXML("creaXML.xml");
+        $asignatura->asXML("asignaturas.xml");
 
-        header("Location: creaXML.xml");
+        header("Location: asignaturas.xml");
     }
 
     if(isset($_POST["codigo"])){
