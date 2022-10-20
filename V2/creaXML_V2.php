@@ -16,6 +16,9 @@
             $centro = simplexml_load_file('asignaturas.xml');
             $centro = new SimpleXMLElement(file_get_contents('asignaturas.xml'));
         }
+        else{
+            return false;
+        }
 
         $asignatura = $centro -> addChild("asignatura");
         $asignatura -> addChild("codigo",$_POST["codigo"]);
