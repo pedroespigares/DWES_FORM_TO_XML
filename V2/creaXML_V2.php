@@ -27,7 +27,7 @@
             $teachers = $asignatura -> addChild("profesores");
         }
 
-        if(isset($_POST["titDNI"]) && isset($_POST["titNombre"]) && isset($_POST["titApellidos"])){
+        if(isset($_POST["titDNI"])){
             $titulares = $teachers -> addChild("titulares");
             for($i = 0; $i < count($_POST["titDNI"]); $i++){
                 $singleTitularTeacher = $titulares -> addChild("profesor");
@@ -37,7 +37,7 @@
             }
         }
 
-        if(isset($_POST["pracDNI"]) && isset($_POST["pracNombre"]) && isset($_POST["pracApellidos"])){
+        if(isset($_POST["pracDNI"])){
             $practicas = $teachers -> addChild("practicas");
             for($i = 0; $i < count($_POST["pracDNI"]); $i++){
                 $singlePracticeTeacher = $practicas -> addChild("profesor");
